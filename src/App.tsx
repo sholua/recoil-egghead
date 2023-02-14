@@ -1,24 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+import { atom, useRecoilState } from 'recoil';
+
+const shoppingList = atom({
+  key: 'shoppingList',
+  default: ['milk', 'juice', 'eggs'],
+});
+
 function App() {
+  const [myShoppingList, setShoppingList] = useRecoilState(shoppingList);
+
+  const removeItem = (item: string) => () => {
+    const itemIndex = myShoppingList.findIndex((element) => element === item);
+    setShoppingList([
+      ...myShoppingList.slice(0, itemIndex),
+      ...myShoppingList.slice(itemIndex + 1),
+    ]);
+  };
+
+  const addItem = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      setShoppingList([...myShoppingList, event.currentTarget.value]);
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Shopping List</h1>
+      <input onKeyDown={addItem} />
+      <br />
+      <ul>
+        {myShoppingList.map((item, index) => (
+          <li key={index} onClick={removeItem(item)}>
+            {item}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
