@@ -4,6 +4,7 @@ import RecoilSelector from './components/RecoilSelector';
 import RecoilSelectorFamily from './components/RecoilSelectorFamily';
 import RecoilState from './components/RecoilState';
 import RecoilLoadable from './components/RecoilLoadable';
+import RecoilRightHook from './components/RecoilRightHook';
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       {/* <RecoilSelector /> */}
       {/* <RecoilSelectorFamily /> */}
       {/* <RecoilApiCall /> */}
-      <RecoilLoadable />
+      {/* <RecoilLoadable /> */}
+      <RecoilRightHook />
     </div>
   );
 }
